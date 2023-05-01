@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コメント履歴アプリ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    input, button {
+      font-size: 18px;
+    }
+
+    .comment-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .comment-item {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      white-space: nowrap;
+    }
+
+    .comment-author {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>コメント履歴アプリ</h1>
+    <label for="author">投稿者:</label>
+    <input type="text" id="author" placeholder="投稿者名を入力">
+    <br><br>
+    <label for="comment">コメント:</label>
+    <input type="text" id="comment" placeholder="コメントを入力">
+    <br><br>
+    <button onclick="addComment()">コメントを追加</button>
+    <h4 id="historyTitle">投稿履歴：</h4>
+    <h4 id="commentList" class="comment-list"></h4>
+  </div>
+  <script>
+    function addComment() {
+      var author = document.getElementById("author").value.trim();
+      var comment = document.getElementById("comment").value.trim();
+
+      if (author && comment) {
+        var commentList = document.getElementById("commentList");
+        var newItem = document.createElement("li");
+        newItem.classList.add("comment-item");
+
+        var authorSpan = document.createElement("span");
+        authorSpan.classList.add("comment-author");
+        authorSpan.innerText = author + ": ";
+        newItem.appendChild(authorSpan);
+
+        var commentText = document.createTextNode(comment);
+        newItem.appendChild(commentText);
+
+        commentList.appendChild(newItem);
+
+        document.getElementById("author").value = "";
+        document.getElementById("comment").value = "";
+
+        document.getElementById("author").focus();
+      }
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === "Enter") {
+        addComment();
+      }
+    }
+
+    document.getElementById("author").addEventListener("keypress", handleKeyPress);
+    document.getElementById("comment").addEventListener("keypress", handleKeyPress);
+  </script>
+</body>
+</html>
